@@ -1,0 +1,9 @@
+{% extends "notes1/base.html" %}
+{% block content %}
+       <h1> Вы вышли </h1>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+              <a href="{% url 'login' %}">Войти обратно</a>
+            </small>
+        </div>
+{% endblock content %}

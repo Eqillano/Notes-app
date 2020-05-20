@@ -1,0 +1,10 @@
+{% extends "notes1/base.html" %}
+
+{% block content %}
+        <h1 class='text-center'>Категории блогов</h1>
+         {% for item in cat_menu_list %}
+          <h3><a href="{% url 'category' item|slugify %}"> {{ item }}<a/> </h3>
+            <hr/>
+
+         {% endfor %}
+{% endblock content %}

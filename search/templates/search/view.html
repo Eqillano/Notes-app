@@ -1,0 +1,45 @@
+{% extends "notes1/base.html" %}
+
+{% block content %}
+
+ <div class='row  mb-3'>
+            {% if query %}
+            <div class='col-12' >
+               результат поиска <b>{{ query }}</b>
+
+                <hr/>
+            </div>
+            {% else %}
+
+            <div class='col-12 col-md-6 mx-auto py-5'>
+               {% include 'search/snippets/search-form.html' %}
+
+            </div>
+            <div class='col-12'>
+                <hr>
+            </div>
+            {% endif %}
+            {% for post in object_list %}
+            <div class='row'>
+            <div class='col-12'>
+                <article class="media content-section">
+                  <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+                  <div class="media-body">
+                    <div class="article-metadata">
+                    Автор : <b>{{ post.author }}</b> |
+                      Категория : <b> {{ post.category }}</b> |
+                      <small class="text-muted">Дата <b>{{ post.date_posted|date:"F d, Y" }}</b>
+                      <b> {{ post.categories.title }}</b>
+                    </div>
+                    <h2><a class="article-title" href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+                    <p class="article-content">{{ post.content }}</p>
+                  </div>
+                </article>
+                </div>
+                </div>
+            {% endfor %}
+</div>
+
+
+
+{% endblock %}

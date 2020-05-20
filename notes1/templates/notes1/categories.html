@@ -1,0 +1,26 @@
+{% extends "notes1/base.html" %}
+{% block content %}
+
+{% if category_posts %}
+    {% for post in category_posts %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+            Автор : <b>{{ post.author }}</b> |
+              Категория : <b><a href="{% url 'category' post.category|slugify %}">{{ post.category }}</a></b> |
+              <small class="text-muted">Дата <b>{{ post.date_posted|date:"F d, Y" }}</b>
+              <b> {{ post.categories.title }}</b>
+            </div>
+            <h2><a class="article-title" href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+
+{% else %}
+
+<h2 class='text-center'>Такой страницы не существует</h2>
+
+    {% endif %}
+{% endblock content %}
