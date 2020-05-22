@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'notes1/main.css' %}">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' />
 
     {% if title %}
         <title>Менеджер Заметок </title>
@@ -48,7 +49,7 @@
 
             </div>
           </div>
-          <form method='GET' action ="{% url 'query' %}" class="form my-2 my-lg-0">
+          <form method='GET' action ="{% url 'query' %}" class="search-ajax form my-2 my-lg-0">
             <div class='input-group'>
           <input class="form-control" type="search" placeholder="Search" name='q' aria-label="Search" value='{{ request.GET.q }}'>
           <span class='input-group-btn'>
@@ -73,12 +74,61 @@
         </div>
 
       </div>
+  <script>
+$(document).ready(function(){
+  var FavForm = $('.fav-ajax-form')
+  FavForm.submit(function(e){
+    e.preventDefault();
+  })
+})
+  </script>
+
     </main>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+    $(document).ready(function(){
+      var searchForm = $(".search-ajax")
+      var searchInput = searchForm.find("[name='q']")
+      var typingTimer;
+      var typingInterval = 500
+      var searchBtn = searchForm.find("[type='submit']")
+
+      searchInput.keyup(function(event){
+        clearTimeout(typingTimer)
+        typingTimer = setTimeout(performSearch,typingInterval)
+      })
+
+      searchInput.keydown(function(event){
+        clearTimeout(typingTimer)
+      })
+
+      function doSearch(){
+        searchBtn.addClass("disabled")
+        searchBtn.html("<i class='fa fa-spin fa-spinner'></i>Searching ....")
+      }
+
+      function performSearch(){
+        doSearch()
+        var query = searchInput.val()
+        setTimeout(function(){
+          window.location.href = '/search/?q=' + query
+        },1000)
+
+      }
+
+    })
+    </script>
+    </body>
+    </html>
+
+
+
+
 </body>
 </html>

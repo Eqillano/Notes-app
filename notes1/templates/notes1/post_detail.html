@@ -21,7 +21,7 @@
         <br/>
         <hr/>
         <br/>
-        <form class='form-control' action="{% url 'fav-post' post.pk %}" method='POST'>
+        <form class='fav-ajax-form form-control' action="{% url 'fav-post' post.pk %}" method='POST'>
           {% csrf_token %}
     {{ fav }}
           {% if marked %}
